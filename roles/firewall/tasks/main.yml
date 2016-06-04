@@ -1,0 +1,74 @@
+---
+- name: Install
+  become: yes
+  apt: name=ufw state=latest
+
+- name: Start
+  ufw: state=enabled
+
+- name: Allow IN 80/TCP  HTTP
+  become: yes
+  ufw: rule=allow direction=in port=80 proto=tcp
+
+- name: Allow IN 443/TCP  HTTPS
+  become: yes
+  ufw: rule=allow direction=in port=443 proto=tcp
+
+- name: Allow IN 22/TCP  SSH
+  become: yes
+  ufw: rule=allow direction=in port=22 proto=tcp
+
+- name: Allow IN 21/ANY  FTP
+  become: yes
+  ufw: rule=allow direction=in port=21 proto=any
+
+- name: Allow IN/OUT 53/UDP  DNS
+  become: yes
+  ufw: rule=allow port=53 proto=udp
+
+- name: Allow IN/OUT 25/TCP  SMTP
+  become: yes
+  ufw: rule=allow port=25 proto=tcp
+
+- name: Allow IN/OUT 587/TCP  SMTP
+  become: yes
+  ufw: rule=allow port=587 proto=tcp
+
+- name: Allow IN/OUT 465/TCP  SMTP
+  become: yes
+  ufw: rule=allow port=465 proto=tcp
+
+- name: Allow IN/OUT 110/TCP  POP3
+  become: yes
+  ufw: rule=allow port=110 proto=tcp
+
+- name: Allow IN/OUT 143/TCP  IMAP
+  become: yes
+  ufw: rule=allow port=143 proto=tcp
+
+- name: Allow IN/OUT 993/TCP  IMAP
+  become: yes
+  ufw: rule=allow port=993 proto=tcp
+
+- name: Allow IN/OUT 995/TCP  POP3S
+  become: yes
+  ufw: rule=allow port=995 proto=tcp
+
+- name: Allow IN/OUT 8000/TCP RANCHERSERVER
+  become: yes
+  ufw: rule=allow port=8000 proto=tcp
+
+- name: Allow IN/OUT 500/UDP RANCHERAGENT
+  become: yes
+  ufw: rule=allow port=500 proto=udp
+
+- name: Allow IN/OUT 4500/UDP RANCHERAGENT
+  become: yes
+  ufw: rule=allow port=4500 proto=udp
+
+- name: Allow OUT 11371/TCP  GPG server key
+  become: yes
+  ufw: rule=allow port=11371 direction=out proto=tcp
+  notify: ufw reload
+
+

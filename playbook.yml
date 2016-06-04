@@ -1,0 +1,13 @@
+---
+- name: Installing web servers
+  hosts: web
+  remote_user: root
+  vars:
+    user: johndoe
+
+  roles:
+    - utils
+    - user
+    - dotfiles
+    - firewall
+    - docker

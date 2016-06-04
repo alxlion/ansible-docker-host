@@ -1,0 +1,22 @@
+---
+- name: Install ZSH
+  become: yes
+  apt: name=zsh state=latest
+
+- name: Change current user shell
+  become: yes
+  user: name={{ user }} shell=/bin/zsh
+
+- name: Fetch oh-my-zsh
+  get_url: url="https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
+             dest=/tmp/install-oh-my-zsh.sh
+             mode=0755
+
+- name: Install oh-my-zsh
+  command: sh -c /tmp/install-oh-my-zsh.sh
+
+- name: Cloning dotfiles
+  git: repo=https://github.com/lnalex/dotfiles.git dest=/home/{{ user }}/.dotfiles
+
+- name: Deploy dotfiles
+  command: sh -c /home/{{ user }}/.dotfiles/deploy.sh

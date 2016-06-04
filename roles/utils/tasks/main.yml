@@ -1,0 +1,21 @@
+---
+- name: Add dotdeb repos
+  apt_repository: repo='{{ item }}'
+  with_items:
+    - "deb http://ftp.fr.debian.org/debian {{ansible_distribution_release}} main contrib non-free"
+    - "deb http://packages.dotdeb.org {{ansible_distribution_release}} all"
+    - "deb-src http://packages.dotdeb.org {{ansible_distribution_release}} all"
+
+- name: Add key dotdeb
+  apt_key: url=https://www.dotdeb.org/dotdeb.gpg
+
+- apt: name={{ item }} update_cache=yes state=latest
+  with_items:
+    - curl
+    - sudo
+    - apt-transport-https
+    - ca-certificates
+    - vim
+    - python-all
+    - python-pip
+    - git

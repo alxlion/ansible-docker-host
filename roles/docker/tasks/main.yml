@@ -1,0 +1,21 @@
+---
+- name: Add Docker repo
+  apt_repository: repo="deb http://apt.dockerproject.org/repo debian-{{ansible_distribution_release}} main"
+
+- name: Add Docker key
+  apt_key: keyserver="hkp://keyserver.ubuntu.com:80" id="58118E89F3A912897C070ADBF76221572C52609D"
+
+- name: Install Docker
+  become: yes
+  apt: name=docker-engine state=latest update_cache=yes
+
+- name: Enable Docker
+  become: yes
+  service: name=docker state=started enabled=true
+
+- name: Install Docker utils
+  become: yes
+  pip: name={{ item }}
+  with_items:
+    - docker-compose
+    - docker-py
