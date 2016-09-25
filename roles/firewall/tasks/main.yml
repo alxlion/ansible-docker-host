@@ -24,7 +24,6 @@
 
 - name: Allow OUT 11371/TCP  GPG server key
   become: yes
-  ufw: rule=allow port=11371 direction=out proto=tcp
-  notify: ufw reload
+  ufw: rule=allow port=11371 direction=out proto=tcp state=reloaded
 
 
